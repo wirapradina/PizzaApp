@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 
 class LoginActivity : AppCompatActivity() {
@@ -18,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
         //instance text
         val txtUsername:EditText = findViewById(R.id.editTextEmail)
         val txtPassword:EditText = findViewById(R.id.editTextPassword)
+        val btnRegister:TextView = findViewById(R.id.btnRegister1)
         //instance button login
         val btnLogin:Button = findViewById(R.id.buttonLogin)
 
@@ -25,16 +27,17 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             val dbHelper = DatabaseHelper(this)
 
-            //check data
+            /*check data
             val data:String = dbHelper.checkData("stevi.ema@amikom.ac.id")
             Toast.makeText(this@LoginActivity, "Result : " + data, Toast.LENGTH_SHORT).show()
             if(data == null){
                 //insert data
                 dbHelper.addAccont("stevi.ema@amikom.ac.id", "Stevi Ema W", "Cashier", "12345")
             }
+
             val email = txtUsername.text.toString().trim()
             val password = txtPassword.text.toString().trim()
-
+            */
             //check login
             val  result:Boolean = dbHelper.checkLogin(txtUsername.text.toString(), txtPassword.text.toString())
             if (result){
@@ -45,6 +48,11 @@ class LoginActivity : AppCompatActivity() {
                 txtUsername.hint = "email"
                 txtPassword.hint = "password"
             }
+        }
+        //event button register
+        btnRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 }

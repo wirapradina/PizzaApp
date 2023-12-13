@@ -1,10 +1,12 @@
 package com.example.pizzaapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,7 +40,25 @@ class FragmentMakanan : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_makanan, container, false)
+        //instance
         val rvmakanan: RecyclerView = view.findViewById(R.id.recyclerMakanan)
+        val databaseHelper = DatabaseHelper(this.requireContext())
+        //call function show data menu
+        val listData = databaseHelper.showMenu()
+        //set layout recycler view
+        rvmakanan.layoutManager = LinearLayoutManager(activity)
+        //set adapter recycle view
+        rvmakanan.adapter = MakananAdapter(listData)
+
+        //instance button add menu
+        val buttonAdd : Button = view.findViewById(R.id.buttonAddMenu)
+        //event saat button add menu di klik
+        buttonAdd.setOnClickListener {
+            requireActivity().run {
+                startActivity(Intent(this, AddMenuActivity::class.java))
+                finish()
+            }
+        }
 
         return view
     }
